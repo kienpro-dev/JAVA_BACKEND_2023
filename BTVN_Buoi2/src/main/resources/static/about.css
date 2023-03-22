@@ -1,0 +1,42 @@
+h1 {
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    width: 500px;
+    max-width: 50%;
+}
+
+.container table {
+    width: 100%;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.container .column {
+    background-color: #009879;
+    color: white;
+}
+
+.container .record {
+    text-align: center;
+    border-bottom: 1px solid black
+}
+
+button {
+    margin-top: 20px;
+    margin-left: 190px;
+    width:120px;
+    height: 34px;
+    border: none;
+    outline: none;
+    background: #009879;
+    color: white;
+    border-radius: 8px;
+}
+
+button:hover {
+    opacity: .7;
+}
+

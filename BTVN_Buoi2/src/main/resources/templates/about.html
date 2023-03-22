@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Service</title>
+    <link rel="stylesheet" th:href="@{about.css}">
+</head>
+<body>
+<div class="container">
+    <h1>DANH SÁCH SINH VIÊN</h1>
+    <table>
+        <thead class="column">
+        <tr>
+            <th>Mã sinh viên</th>
+            <th>Họ tên</th>
+            <th>Ngành học</th>
+            <th>GPA</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="record" th:each="item: ${List}">
+            <td th:text="*{item.getId()}"></td>
+            <td th:text="*{item.getName()}"></td>
+            <td th:text="*{item.getMajor()}"></td>
+            <td th:text="*{item.getGpa()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/home}" method="get">
+        <button type="submit">Quay lại</button>
+    </form>
+
+</div>
+</body>
+</html>
