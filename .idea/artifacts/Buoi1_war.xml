@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Buoi1:war">
+    <output-path>$PROJECT_DIR$/Buoi1/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>false</exploded>
+        <module>Buoi1</module>
+        <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="archive" name="Buoi1-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Buoi1:war exploded" />
+    </root>
+  </artifact>
+</component>
