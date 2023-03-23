@@ -15,10 +15,10 @@ public class TestController {
     @PostMapping("/home")
     public String redirect(@RequestParam("username") String username, @RequestParam("password") String password, Model model)
     {
-        if(username.equals("kien2372003") && password.equals("&@kiE_n?")) {
+        if(username.equals("kien2372003") && password.equals("kien1234")) {
             return "redirect:about";
         } else {
-            model.addAttribute("wrong", "Sai thông tin tài khoản hoặc mật khẩu");
+            model.addAttribute("wrong", "x Đăng nhập thất bại: sai tên tài khoản hoặc mật khẩu");
             return "index";
         }
     }

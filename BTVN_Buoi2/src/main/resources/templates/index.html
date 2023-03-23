@@ -10,11 +10,11 @@
         <form th:action="@{/home}" method="post">
             <h1>Trang đăng nhập</h1>
 
-            <input type="text" name="username" placeholder="Tài khoản"><br>
+            <input type="text" name="username" placeholder="Tài khoản">
 
             <input type="password" name="password" placeholder="Mật khẩu">
 
-            <h2 th:text="${wrong}"></h2>
+            <h2 style="color: red" th:text="${wrong}"></h2>
 
             <button type="submit">Đăng nhập</button>
         </form>
