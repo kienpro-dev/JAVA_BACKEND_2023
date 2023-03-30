@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link th:href="@{css/login.css}" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <h1>
+        <a><img th:src="@{image/img_garena_logo.png}" style="height: 35px;"></a>
+    </h1>
+</div>
+<div class="content">
+    <h2 class="title">Đăng nhập</h2>
+    <div class="partnerLogin">
+        <p>Đăng nhập với tài khoản Garena</p>
+    </div>
+    <form class="loginForm" th:action="@{/login}" method="post">
+        <div class="line">
+            <input name="username" type="text" placeholder="Tài khoản Garena" title="Tài khoản Garena">
+        </div>
+        <div class="line">
+            <input name="password" type="password" placeholder="Mật khẩu" title="Mật khẩu">
+        </div>
+        <div>
+            <h3 style="color: red" th:text="${wrong}"></h3>
+        </div>
+        <div class="line btnLine">
+            <button type="submit" class="btn">Đăng Nhập Ngay</button>
+        </div>
+    </form>
+    <div class="divider">hoặc</div>
+    <form class="loginForm" th:action="@{/signup}" method="get">
+        <div class="line btnLine">
+            <button type="submit" class="btn black">Tạo tài khoản mới</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

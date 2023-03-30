@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <link rel="stylesheet" th:href="@{css/store.css}">
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <img th:src="@{image/logo-new.png}">
+    </div>
+    <div class="title">Danh sách tài khoản</div>
+    <div class="my-4">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Tài Khoản</th>
+                <th>Mật khẩu</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${listAcc}">
+                <td th:text="*{item.getId()}"></td>
+                <td th:text="*{item.getUsername()}"></td>
+                <td th:text="*{item.getPassword()}"></td>
+                <td th:text="*{item.getEmail()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <form th:action="@{/api/accounts}" method="get">
+            <button type="submit" class="seeAPI">Xem dữ liệu tài khoản</button>
+        </form>
+        <form th:action="@{/login}" method="get">
+            <button type="submit" class="logout">Đăng xuất</button>
+        </form>
+    </div>
+    <footer class="mt-5">
+        <p><img th:src="@{image/logo-footer.png}"></p>
+    </footer>
+</div>
+</body>
+</html>

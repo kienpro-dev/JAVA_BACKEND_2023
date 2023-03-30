@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{css/signup.css}">
+</head>
+<body>
+<div class="header">
+    <h1>
+        <a><img th:src="@{image/img_garena_logo.png}" style="height: 35px;"></a>
+    </h1>
+</div>
+<div class="content">
+    <h2 class="title">Đăng ký</h2>
+    <form class="signupForm" th:action="@{/signup}" method="post">
+        <div class="line">
+            <input name="username" type="text" placeholder="Tên truy cập" title="Tên truy cập">
+        </div>
+        <div class="line">
+            <input name="password" type="password" placeholder="Mật khẩu" title="Mật khẩu">
+        </div>
+        <div class="line">
+            <input name="password2" type="password" placeholder="Nhập lại mật khẩu" title="Nhập lại mật khẩu">
+        </div>
+        <div class="line">
+            <input name="email" type="text" placeholder="Email" title="Email">
+        </div>
+        <div>
+            <h3 style="color: red" th:text="${wrong}"></h3>
+        </div>
+        <div class="line btnLine">
+            <button type="submit" class="btn">Đăng kí ngay</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
