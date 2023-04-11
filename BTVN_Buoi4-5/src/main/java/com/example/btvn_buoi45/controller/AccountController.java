@@ -70,9 +70,25 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/store/delete/{username}")
+    @GetMapping("/delete/{username}")
     public ModelAndView deleteAccount(@PathVariable String username) {
         accountService.deleteAccount(username);
+        return new ModelAndView("redirect:/store");
+    }
+
+    @GetMapping("/edit/{username}")
+    public ModelAndView edit(@PathVariable String username, Model model) {
+        Account account = accountService.findAccountByUsername(username);
+        model.addAttribute("username", account.getUsername());
+        model.addAttribute("password", account.getPassword());
+        model.addAttribute("email", account.getEmail());
+
+        return new ModelAndView("edit");
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView editAccount(@ModelAttribute Account account) {
+        accountService.updateAccount(account);
         return new ModelAndView("redirect:/store");
     }
 }

@@ -33,9 +33,11 @@
                 <td th:text="*{item.getCreatedAt()}"></td>
                 <td th:text="*{item.getUpdatedAt()}"></td>
                 <td>
-                    <a th:href="@{/store/delete/{username}(username = *{item.getUsername()})}">Delete</a>
+                    <a th:href="@{/delete/{username}(username = *{item.getUsername()})}">Delete</a>
                 </td>
-                <td>Edit</td>
+                <td>
+                    <a th:href="@{/edit/{username}(username = *{item.getUsername()})}">Edit</a>
+                </td>
             </tr>
             </tbody>
         </table>

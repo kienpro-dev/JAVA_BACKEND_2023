@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <link rel="stylesheet" th:href="@{css/signup.css}">
+</head>
+<body>
+<div class="content">
+    <h2 class="title">Sửa thông tin</h2>
+    <form class="signupForm" th:action="@{/edit}" method="post">
+        <div class="line">
+            <input th:value="*{username}" name="username" type="text" placeholder="Tên truy cập" title="Tên truy cập">
+        </div>
+        <div class="line">
+            <input th:value="*{password}" name="password" type="text" placeholder="Mật khẩu" title="Mật khẩu">
+        </div>
+        <div class="line">
+            <input th:value="*{email}" name="email" type="text" placeholder="Email" title="Email">
+        </div>
+        <div class="line btnLine">
+            <button type="submit" class="btn">Xong</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
