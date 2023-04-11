@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ea48fdd1-10bc-4a7a-b173-b2d0266ce21f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/config/UserConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/exception/CustomExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/exception/ErrorRespone.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Buoi4/src/main/java/com/example/buoi4/exception/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BTVN_Buoi2/src/main/java/com/example/btvn_buoi2/Controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BTVN_Buoi2/src/main/java/com/example/btvn_buoi2/Controller/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BTVN_Buoi2/src/main/resources/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/../BTVN_Buoi2/src/main/resources/templates/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Buoi3/src/main/java/com/example/buoi3/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Buoi3/src/main/java/com/example/buoi3/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OnTapBuoi3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../OnTapBuoi3/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2O61RDwr3b5O4ejjd0gA6s64Ds4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../demo" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea48fdd1-10bc-4a7a-b173-b2d0266ce21f" name="Changes" comment="" />
+      <created>1680866208181</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680866208181</updated>
+      <workItem from="1680866209688" duration="1003000" />
+      <workItem from="1681107506209" duration="92000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
