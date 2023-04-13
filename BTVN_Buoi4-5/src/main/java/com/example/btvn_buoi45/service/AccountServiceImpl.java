@@ -22,13 +22,13 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account findAccountByUsername(String username) {
-        Account accountFind = accountRepository.findAccountByUsername(username);
+        Optional<Account> accountFind = accountRepository.findById(username);
 
-        if(accountFind == null) {
+        if(accountFind.isEmpty()) {
             throw new NotFoundException("Not found account has username " + username);
         }
 
-        return accountFind;
+        return accountFind.get();
     }
 
     @Override
@@ -36,23 +36,31 @@ public class AccountServiceImpl implements AccountService{
         try {
             accountRepository.save(account);
         } catch (Exception e) {
-            throw new InternalServerException("Data error saving account");
+            throw new InternalServerException("Data error creating account");
         }
     }
 
     @Override
     public void updateAccount(Account account) {
-        accountRepository.updateAccount(account.getUsername(), account.getPassword(), account.getEmail());
+        try {
+            accountRepository.updateAccount(account.getUsername(), account.getPassword(), account.getEmail());
+        } catch (Exception e) {
+            throw new InternalServerException("Data error updating account");
+        }
     }
 
     @Override
     public void deleteAccount(String username) {
-        Account accountFind = accountRepository.findAccountByUsername(username);
+        Optional<Account> accountFind = accountRepository.findById(username);
 
-        if(accountFind == null) {
+        if(accountFind.isEmpty()) {
             throw new NotFoundException("Not found account has username " + username);
         }
 
-        accountRepository.deleteAccountByUsername(username);
+        try {
+            accountRepository.deleteById(username);
+        } catch (Exception e) {
+            throw new InternalServerException("Data error deleting account");
+        }
     }
 }

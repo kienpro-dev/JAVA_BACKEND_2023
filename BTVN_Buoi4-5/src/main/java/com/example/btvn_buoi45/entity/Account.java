@@ -17,10 +17,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "Account")
 public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id
     private String username;
 
     private String password;

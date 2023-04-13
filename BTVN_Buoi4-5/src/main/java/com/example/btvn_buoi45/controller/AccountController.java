@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -60,8 +61,8 @@ public class AccountController {
         } else {
             List<Account> list = accountService.findAll();
             for (Account account : list) {
-                if(account.getUsername().equals(username) && account.getEmail().equals(email)) {
-                    model.addAttribute("wrong", "x Đăng ký thất bại: tên tài khoản hoặc email đã tồn tại");
+                if(account.getUsername().equals(username)) {
+                    model.addAttribute("wrong", "x Đăng ký thất bại: tên tài khoản đã tồn tại");
                     return new ModelAndView("signup");
                 }
             }
@@ -82,6 +83,7 @@ public class AccountController {
         model.addAttribute("username", account.getUsername());
         model.addAttribute("password", account.getPassword());
         model.addAttribute("email", account.getEmail());
+        model.addAttribute("dupEmail", account.getEmail());
 
         return new ModelAndView("edit");
     }
@@ -90,5 +92,15 @@ public class AccountController {
     public ModelAndView editAccount(@ModelAttribute Account account) {
         accountService.updateAccount(account);
         return new ModelAndView("redirect:/store");
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchAccount(@RequestParam(value = "searchUsername") String username, Model model) {
+        Account account = accountService.findAccountByUsername(username);
+        List<Account> list = new ArrayList<>();
+        list.add(account);
+        model.addAttribute("list", list);
+
+        return new ModelAndView("store");
     }
 }

@@ -11,6 +11,11 @@
         <img th:src="@{image/logo-new.png}">
     </div>
     <div class="title">Danh sách tài khoản</div>
+    <form th:action="@{/search}" method="get">
+        <div style="padding-bottom: 20px;">
+            <input type="text" name="searchUsername" placeholder="Nhập tài khoản của bạn để tìm kiếm..." style="color: #fff; background: none;padding: 0.5em 0.75em; border: 1px solid #7a6c54;">
+        </div>
+    </form>
     <div class="my-4">
         <table class="table">
             <thead>
@@ -25,8 +30,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item: ${list}">
-                <td th:text="*{item.getId()}"></td>
+            <tr th:each="item, cnt: ${list}">
+                <td th:text="*{cnt.index + 1}"></td>
                 <td th:text="*{item.getUsername()}"></td>
                 <td th:text="*{item.getPassword()}"></td>
                 <td th:text="*{item.getEmail()}"></td>

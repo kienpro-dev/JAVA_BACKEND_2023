@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit</title>
-    <link rel="stylesheet" th:href="@{css/signup.css}">
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
 </head>
 <body>
 <div class="header">
     <h1>
-        <a><img th:src="@{image/img_garena_logo.png}" style="height: 35px;"></a>
+        <a><img th:src="@{/image/img_garena_logo.png}" style="height: 35px;"></a>
     </h1>
 </div>
 <div class="content">
-    <h2 class="title">Sửa thông tin</h2>
+    <h2 class="title" style="margin-bottom: 20px">Sửa thông tin tài khoản</h2>
     <form class="signupForm" th:action="@{/edit}" method="post">
+        <h3 class="title" style="margin-top: 20px" th:text="${username}"></h3>
+        <input th:value="${username}" name="username" type="hidden">
         <div class="line">
-            <input th:value="*{username}" name="username" type="text" placeholder="Tên truy cập" title="Tên truy cập">
+            <label>Mật khẩu</label>
+            <input th:value="${password}" name="password" type="text" title="Mật khẩu">
         </div>
         <div class="line">
-            <input th:value="*{password}" name="password" type="text" placeholder="Mật khẩu" title="Mật khẩu">
-        </div>
-        <div class="line">
-            <input th:value="*{email}" name="email" type="text" placeholder="Email" title="Email">
+            <label>Email</label>
+            <input th:value="${email}" name="email" type="text" title="Email">
         </div>
         <div class="line btnLine">
-            <button type="submit" class="btn">Xong</button>
+            <button type="submit" class="btn">Hoàn thành</button>
         </div>
     </form>
 </div>

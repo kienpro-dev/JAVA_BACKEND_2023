@@ -9,15 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
-    @Transactional
-    Account findAccountByUsername(String username);
-
-    @Transactional
-    void deleteAccountByUsername(String username);
+public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Transactional
     @Modifying
-    @Query("update Account a set a.username = ?1, a.password = ?2, a.email = ?3, a.updatedAt = current_timestamp")
+    @Query("update Account a set a.password = ?2, a.email = ?3, a.updatedAt = current_timestamp where a.username = ?1")
     void updateAccount(String username, String password, String email);
 }
