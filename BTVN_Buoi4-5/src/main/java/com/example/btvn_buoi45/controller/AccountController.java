@@ -11,12 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController {
-    @Autowired
-    private AccountRepository accountRepository;
-
     @Autowired
     private AccountService accountService;
 
@@ -32,13 +30,8 @@ public class AccountController {
 
     @GetMapping("/store")
     public ModelAndView store(Model model) {
-        model.addAttribute("list",accountRepository.findAll());
+        model.addAttribute("list",accountService.findAll());
         return new ModelAndView("store");
-    }
-
-    @GetMapping("/api/accounts")
-    public ResponseEntity<?> getApi() {
-        return ResponseEntity.ok().body(accountRepository.findAll());
     }
 
     @PostMapping("/login")

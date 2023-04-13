@@ -32,9 +32,9 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void createAccount(Account account) {
+    public Account createAccount(Account account) {
         try {
-            accountRepository.save(account);
+            return accountRepository.save(account);
         } catch (Exception e) {
             throw new InternalServerException("Data error creating account");
         }
