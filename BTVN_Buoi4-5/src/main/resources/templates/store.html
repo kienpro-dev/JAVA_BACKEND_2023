@@ -11,11 +11,15 @@
         <img th:src="@{image/logo-new.png}">
     </div>
     <div class="title">Danh sách tài khoản</div>
-    <form th:action="@{/search}" method="get">
-        <div style="padding-bottom: 20px;">
-            <input type="text" name="searchUsername" placeholder="Nhập tài khoản của bạn để tìm kiếm..." style="color: #fff; background: none;padding: 0.5em 0.75em; border: 1px solid #7a6c54;">
-        </div>
-    </form>
+    <div class="search">
+        <form th:action="@{/search}" method="get">
+            <div class="form-group">
+                <input class="input_search" type="text" name="searchUsername" placeholder="Nhập tài khoản của bạn để tìm kiếm...">
+                <input class="button_search" value="Tìm" type="submit">
+            </div>
+        </form>
+
+    </div>
     <div class="my-4">
         <table class="table">
             <thead>
