@@ -1,6 +1,7 @@
 package com.example.btvn_buoi45.controller;
 
 import com.example.btvn_buoi45.entity.Account;
+import com.example.btvn_buoi45.exception.InternalServerException;
 import com.example.btvn_buoi45.repository.AccountRepository;
 import com.example.btvn_buoi45.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,27 @@ public class ApiController {
     }
 
     @PatchMapping("/update/{username}")
-    public ResponseEntity<?> updateAccount(@PathVariable String username, @RequestBody Account account) {
+    public ResponseEntity<?> updateAccountPatch(@PathVariable String username, @RequestBody Account account) {
         Account oldAccount = accountService.findAccountByUsername(username);
-        oldAccount.setPassword(account.getPassword());
-        oldAccount.setEmail(account.getEmail());
-        return ResponseEntity.ok().body(accountRepository.save(oldAccount));
+        if(account.getPassword() !=  null) {
+            oldAccount.setPassword(account.getPassword());
+        }
+        if(account.getEmail() != null) {
+            oldAccount.setEmail(account.getEmail());
+        }
+        accountService.updateAccount(oldAccount);
+        return ResponseEntity.ok().body(oldAccount);
     }
 
+    @PutMapping("/update/{username}")
+    public ResponseEntity<?> updateAccountPut(@PathVariable String username, @RequestBody Account account) {
+        Account oldAccount = accountService.findAccountByUsername(username);
+        if(account.getPassword() == null || account.getEmail() == null) {
+            throw new InternalServerException("Data error updating account");
+        }
+        oldAccount.setPassword(account.getPassword());
+        oldAccount.setEmail(account.getEmail());
+        accountService.updateAccount(oldAccount);
+        return ResponseEntity.ok().body(oldAccount);
+    }
 }
