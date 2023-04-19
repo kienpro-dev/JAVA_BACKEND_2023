@@ -10,6 +10,7 @@ import com.example.buoi6.repository.SubjectRepository;
 import com.example.buoi6.service.StudentService;
 import com.example.buoi6.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,8 @@ public class SubjectController {
     private SubjectRepository subjectRepository;
 
     @GetMapping("")
-    public ResponseEntity<?> getListSubject() {
-        return ResponseEntity.ok(subjectRepository.findAll());
+    public ResponseEntity<?> getListSubject(@RequestParam(name = "page",required = false) int page, @RequestParam(name = "size",required = false, defaultValue = "5") int size) {
+        return ResponseEntity.ok(subjectRepository.findAll(PageRequest.of(page, size)));
     }
 
     @PostMapping("/create")
