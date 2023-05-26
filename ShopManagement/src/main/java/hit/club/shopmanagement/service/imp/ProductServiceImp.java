@@ -3,12 +3,14 @@ package hit.club.shopmanagement.service.imp;
 import hit.club.shopmanagement.dto.ProductDTO;
 import hit.club.shopmanagement.exception.InternalServerException;
 import hit.club.shopmanagement.exception.NotFoundException;
-import hit.club.shopmanagement.mapper.ProductMapper;
+//import hit.club.shopmanagement.mapper.ProductMapper;
 import hit.club.shopmanagement.model.Product;
 import hit.club.shopmanagement.repo.ProductRepository;
 import hit.club.shopmanagement.service.ProductService;
+import hit.club.shopmanagement.utils.UploadFileCloundinary;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
+//import org.mapstruct.factory.Mappers;
+//import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +23,27 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
+//    private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
+
+    private final UploadFileCloundinary uploadFileCloundinary;
+
+//    private final ModelMapper modelMapper;
 
     @Override
     public Product createNewProduct(ProductDTO productDTO) {
         try {
-            return productRepository.save(productMapper.productDTOToProduct(productDTO));
+//            return productRepository.save(productMapper.productDTOToProduct(productDTO));
+            Product product = new Product();
+            product.setProductName(productDTO.getProductName());
+            product.setCount(productDTO.getCount());
+            product.setDescription(productDTO.getDescription());
+            try {
+                String url = uploadFileCloundinary.getUrlFromFile(productDTO.getPhoto());
+                product.setPhoto(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return productRepository.save(product);
         } catch (Exception e) {
             throw new InternalServerException("Data error creating product");
         }
@@ -49,9 +66,9 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public void editProductById(int id, ProductDTO productDTO) {
+    public Product editProductById(int id, ProductDTO productDTO) {
         try {
-            productRepository.editProduct(id, productDTO.getProductName(), productDTO.getCount(), productDTO.getPhoto().toString(), productDTO.getDescription());
+            return productRepository.editProduct(id, productDTO.getProductName(), productDTO.getCount(), productDTO.getPhoto().toString(), productDTO.getDescription());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating product");
         }
@@ -67,6 +84,7 @@ public class ProductServiceImp implements ProductService {
 
         try {
             productRepository.deleteById(id);
+            uploadFileCloundinary.removeFileToUrl(productFind.get().getPhoto());
         } catch (Exception e) {
             throw new InternalServerException("Data error deleting product");
         }

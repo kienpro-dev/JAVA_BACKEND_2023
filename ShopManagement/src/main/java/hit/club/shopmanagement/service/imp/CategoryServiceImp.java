@@ -3,12 +3,13 @@ package hit.club.shopmanagement.service.imp;
 import hit.club.shopmanagement.dto.CategoryDTO;
 import hit.club.shopmanagement.exception.InternalServerException;
 import hit.club.shopmanagement.exception.NotFoundException;
-import hit.club.shopmanagement.mapper.CategoryMapper;
+//import hit.club.shopmanagement.mapper.CategoryMapper;
 import hit.club.shopmanagement.model.Category;
 import hit.club.shopmanagement.repo.CategoryRepository;
 import hit.club.shopmanagement.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
+//import org.mapstruct.factory.Mappers;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +22,15 @@ public class CategoryServiceImp implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
+//    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
+
+    private final ModelMapper modelMapper;
 
     @Override
     public Category createNewCategory(CategoryDTO categoryDTO) {
         try {
-            return categoryRepository.save(categoryMapper.categoryDTOToCategory(categoryDTO));
+//            return categoryRepository.save(categoryMapper.categoryDTOToCategory(categoryDTO));
+            return categoryRepository.save(modelMapper.map(categoryDTO, Category.class));
         } catch (Exception e) {
             throw new InternalServerException("Data error creating category");
         }
@@ -49,9 +53,9 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public void editCategoryById(int id, CategoryDTO categoryDTO) {
+    public Category editCategoryById(int id, CategoryDTO categoryDTO) {
         try {
-            categoryRepository.editCategory(id, categoryDTO.getCategoryName(), categoryDTO.getDescription());
+            return categoryRepository.editCategory(id, categoryDTO.getCategoryName(), categoryDTO.getDescription());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating category");
         }

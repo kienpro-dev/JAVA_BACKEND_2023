@@ -1,15 +1,20 @@
 package hit.club.shopmanagement.service.imp;
 
 import hit.club.shopmanagement.dto.UserDTO;
+import hit.club.shopmanagement.enums.EnumRole;
 import hit.club.shopmanagement.exception.InternalServerException;
 import hit.club.shopmanagement.exception.NotFoundException;
-import hit.club.shopmanagement.mapper.UserMapper;
+//import hit.club.shopmanagement.mapper.UserMapper;
+import hit.club.shopmanagement.model.Role;
 import hit.club.shopmanagement.model.User;
+import hit.club.shopmanagement.repo.RoleRepository;
 import hit.club.shopmanagement.repo.UserRepository;
 import hit.club.shopmanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
+//import org.mapstruct.factory.Mappers;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,12 +26,25 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+//    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+
+    private final ModelMapper modelMapper;
 
     @Override
     public User createNewUser(UserDTO userDTO) {
         try {
-            return userRepository.save(userMapper.userDTOToUser(userDTO));
+//            return userRepository.save(userMapper.userDTOToUser(userDTO));
+            User user = modelMapper.map(userDTO, User.class);
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            Role role = roleRepository.findRoleByRoleName(EnumRole.ROLE_USER);
+            user.setRole(role);
+            return userRepository.save(user);
         } catch (Exception e) {
             throw new InternalServerException("Data error creating user");
         }
@@ -49,9 +67,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void editUserById(int id, UserDTO userDTO) {
+    public User editUserById(int id, UserDTO userDTO) {
         try {
-            userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), userDTO.getBirthday(), userDTO.getUsername(), userDTO.getPassword());
+            return userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), userDTO.getBirthday(), userDTO.getUsername(), userDTO.getPassword());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating user");
         }

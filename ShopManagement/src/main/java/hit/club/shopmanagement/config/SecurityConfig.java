@@ -28,17 +28,17 @@ import java.util.Collections;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final AuthenticationEntryPoint authenticationEntryPointJWT;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
     private final UserDetailServiceImp userDetailServiceImp;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .exceptionHandling().authenticationEntryPoint(authenticationEntryPointJWT).and()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/user/find/**").hasAnyAuthority("ROLE_USER" , "ROLE_ADMIN")
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER" , "ROLE_ADMIN")
+                .antMatchers("/api/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
