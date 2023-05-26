@@ -84,7 +84,6 @@ public class ProductServiceImp implements ProductService {
 
         try {
             productRepository.deleteById(id);
-            uploadFileCloundinary.removeFileToUrl(productFind.get().getPhoto());
         } catch (Exception e) {
             throw new InternalServerException("Data error deleting product");
         }

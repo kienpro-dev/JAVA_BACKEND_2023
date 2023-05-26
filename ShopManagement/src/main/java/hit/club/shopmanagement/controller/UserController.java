@@ -29,13 +29,14 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new
+                UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailImp userDetail = (UserDetailImp) authentication.getPrincipal();
 
-        try{
+        try {
             String accessToken = jwtUtils.generateTokenByUsername(userDetail.getUsername());
             return ResponseEntity.ok(new UserResponse(userDetail.getId(), userDetail.getFullName(), accessToken, userDetail.getAuthorities()));
         } catch (Exception e) {
