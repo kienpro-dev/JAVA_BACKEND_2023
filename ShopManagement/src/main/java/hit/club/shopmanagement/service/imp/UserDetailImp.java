@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,7 +38,8 @@ public class UserDetailImp implements UserDetails {
     public static UserDetailImp map(User user) {
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().getRoleName().name()));
-        return new UserDetailImp(user.getId(), user.getFullName(), user.getAddress(), user.getEmail(), user.getBirthday(), user.getUsername(), user.getPassword(), roles);
+        return new UserDetailImp(user.getId(), user.getFullName(), user.getAddress(),
+                user.getEmail(), user.getBirthday(), user.getUsername(), user.getPassword(), roles);
     }
 
     @Override

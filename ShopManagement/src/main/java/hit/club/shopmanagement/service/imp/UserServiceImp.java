@@ -13,10 +13,13 @@ import hit.club.shopmanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 //import org.mapstruct.factory.Mappers;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +39,23 @@ public class UserServiceImp implements UserService {
 
     private final ModelMapper modelMapper;
 
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     @Override
     public User createNewUser(UserDTO userDTO) {
         try {
 //            return userRepository.save(userMapper.userDTOToUser(userDTO));
+            PropertyMap<UserDTO, User> userMap = new PropertyMap<UserDTO, User>() {
+                @Override
+                protected void configure() {
+                    skip().setBirthday(null);
+                }
+            };
+            modelMapper.addMappings(userMap);
             User user = modelMapper.map(userDTO, User.class);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            Role role = roleRepository.findRoleByRoleName(EnumRole.ROLE_USER);
-            user.setRole(role);
+            user.setRole(roleRepository.findRoleByRoleName(EnumRole.ROLE_USER));
+            user.setBirthday(dateFormat.parse(userDTO.getBirthday()));
             return userRepository.save(user);
         } catch (Exception e) {
             throw new InternalServerException("Data error creating user");
@@ -69,7 +81,7 @@ public class UserServiceImp implements UserService {
     @Override
     public User editUserById(int id, UserDTO userDTO) {
         try {
-            return userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), userDTO.getBirthday(), userDTO.getUsername(), userDTO.getPassword());
+            return userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), dateFormat.parse(userDTO.getBirthday()), userDTO.getUsername(), userDTO.getPassword());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating user");
         }
