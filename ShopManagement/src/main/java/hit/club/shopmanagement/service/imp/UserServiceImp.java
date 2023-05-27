@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Component
 public class UserServiceImp implements UserService {
     @Autowired
@@ -37,20 +36,22 @@ public class UserServiceImp implements UserService {
 
 //    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
-    private final ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     public User createNewUser(UserDTO userDTO) {
         try {
 //            return userRepository.save(userMapper.userDTOToUser(userDTO));
-            PropertyMap<UserDTO, User> userMap = new PropertyMap<UserDTO, User>() {
+            PropertyMap<UserDTO, User> userMap = new PropertyMap<>() {
                 @Override
                 protected void configure() {
                     skip().setBirthday(null);
                 }
             };
+
             modelMapper.addMappings(userMap);
             User user = modelMapper.map(userDTO, User.class);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));

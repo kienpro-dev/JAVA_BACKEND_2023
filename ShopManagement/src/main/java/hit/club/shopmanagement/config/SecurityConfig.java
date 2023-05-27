@@ -39,8 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER" , "ROLE_ADMIN")
-                .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/api/users/edit/{id}").access("hasRole('USER') and authentication.principal.id == #id")
+                .antMatchers("/api/users/get-user/{id}").access("hasRole('USER') and authentication.principal.id == #id")
+                .antMatchers("/api/categories/get-category/**").hasRole("USER")
+                .antMatchers("/api/categories/get-product/**").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)

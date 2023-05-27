@@ -31,17 +31,17 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/get-category/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable int id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/category/{categoryName}")
+    @GetMapping("/get-category/{categoryName}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String categoryName) {
         return ResponseEntity.ok(categoryService.searchCategoryByName(categoryName));
     }
 
-    @GetMapping("/admin/find-all")
+    @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }

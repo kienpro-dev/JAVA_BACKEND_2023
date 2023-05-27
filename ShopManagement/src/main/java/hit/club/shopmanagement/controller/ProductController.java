@@ -31,17 +31,17 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/get-product/{id}")
     public ResponseEntity<?> getProductById(@PathVariable int id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    @GetMapping("/product/{productName}")
+    @GetMapping("/get-product/{productName}")
     public ResponseEntity<?> getProductByName(@PathVariable String productName) {
         return ResponseEntity.ok(productService.searchProductByName(productName));
     }
 
-    @GetMapping("/admin/find-all")
+    @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(productService.getAllProduct());
     }

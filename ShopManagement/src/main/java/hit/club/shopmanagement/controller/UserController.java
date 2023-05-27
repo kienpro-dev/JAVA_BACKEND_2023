@@ -72,7 +72,7 @@ public class UserController {
         return ResponseEntity.ok(userService.searchUserByName(username));
     }
 
-    @GetMapping("/admin/find-all")
+    @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(userService.getAllUser());
     }
