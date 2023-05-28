@@ -5,12 +5,10 @@ import hit.club.shopmanagement.enums.EnumRole;
 import hit.club.shopmanagement.exception.InternalServerException;
 import hit.club.shopmanagement.exception.NotFoundException;
 //import hit.club.shopmanagement.mapper.UserMapper;
-import hit.club.shopmanagement.model.Role;
 import hit.club.shopmanagement.model.User;
 import hit.club.shopmanagement.repo.RoleRepository;
 import hit.club.shopmanagement.repo.UserRepository;
 import hit.club.shopmanagement.service.UserService;
-import lombok.RequiredArgsConstructor;
 //import org.mapstruct.factory.Mappers;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
@@ -44,15 +41,12 @@ public class UserServiceImp implements UserService {
     @Override
     public User createNewUser(UserDTO userDTO) {
         try {
-//            return userRepository.save(userMapper.userDTOToUser(userDTO));
-            PropertyMap<UserDTO, User> userMap = new PropertyMap<>() {
+            modelMapper.typeMap(UserDTO.class, User.class).addMappings(new PropertyMap<UserDTO, User>() {
                 @Override
                 protected void configure() {
-                    skip().setBirthday(null);
+                    skip(destination.getBirthday());
                 }
-            };
-
-            modelMapper.addMappings(userMap);
+            });
             User user = modelMapper.map(userDTO, User.class);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setRole(roleRepository.findRoleByRoleName(EnumRole.ROLE_USER));
@@ -105,7 +99,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User searchUserByName(String username) {
-        User userFind = userRepository.searchByName(username);
+        User userFind = userRepository.findUserByUsername(username);
 
         if(userFind == null) {
             throw new NotFoundException("Not found user has username: " + username);

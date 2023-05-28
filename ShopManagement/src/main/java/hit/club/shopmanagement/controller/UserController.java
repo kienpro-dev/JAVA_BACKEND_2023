@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping("/public/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new
                 UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -44,7 +44,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping("/public/create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.createNewUser(userDTO));
     }
@@ -62,12 +62,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/get-user/{id}")
     public ResponseEntity<?> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/get-user-name/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userService.searchUserByName(username));
     }
