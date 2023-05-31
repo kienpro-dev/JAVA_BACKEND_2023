@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -45,30 +47,30 @@ public class UserController {
     }
 
     @PostMapping("/public/create")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.createNewUser(userDTO));
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO, @RequestParam int id) {
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editUser(@Valid @RequestBody UserDTO userDTO, @PathVariable int id) {
         User user = userService.getUserById(id);
 
         return ResponseEntity.ok(userService.editUserById(id, userDTO));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-user")
-    public ResponseEntity<?> getUserById(@RequestParam int id) {
+    @GetMapping("/get-user/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/get-user-name")
-    public ResponseEntity<?> getUserByUsername(@RequestParam String username) {
+    @GetMapping("/get-user-name/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userService.searchUserByName(username));
     }
 

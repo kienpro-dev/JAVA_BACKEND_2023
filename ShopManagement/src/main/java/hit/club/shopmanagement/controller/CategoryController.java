@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {
@@ -14,30 +16,30 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.createNewCategory(categoryDTO));
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<?> editCategory(@RequestBody CategoryDTO categoryDTO, @RequestParam int id) {
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable int id) {
         Category category = categoryService.getCategoryById(id);
 
         return ResponseEntity.ok(categoryService.editCategoryById(id, categoryDTO));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteCategory(@RequestParam int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable int id) {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-category")
-    public ResponseEntity<?> getCategoryById(@RequestParam int id) {
+    @GetMapping("/get-category/{id}")
+    public ResponseEntity<?> getCategoryById(@PathVariable int id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/get-category-name")
-    public ResponseEntity<?> getUserByUsername(@RequestParam String categoryName) {
+    @GetMapping("/get-category-name/{categoryName}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String categoryName) {
         return ResponseEntity.ok(categoryService.searchCategoryByName(categoryName));
     }
 
