@@ -18,26 +18,26 @@ public class ProductController {
         return ResponseEntity.ok(productService.createNewProduct(productDTO));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> editProduct(@RequestBody ProductDTO productDTO, @PathVariable int id) {
+    @PutMapping("/edit")
+    public ResponseEntity<?> editProduct(@RequestBody ProductDTO productDTO, @RequestParam int id) {
         Product product = productService.getProductById(id);
 
         return ResponseEntity.ok(productService.editProductById(id, productDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable int id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteProduct(@RequestParam int id) {
         productService.deleteProductById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-product/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable int id) {
+    @GetMapping("/get-product")
+    public ResponseEntity<?> getProductById(@RequestParam int id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    @GetMapping("/get-product/{productName}")
-    public ResponseEntity<?> getProductByName(@PathVariable String productName) {
+    @GetMapping("/get-product-name")
+    public ResponseEntity<?> getProductByName(@RequestParam String productName) {
         return ResponseEntity.ok(productService.searchProductByName(productName));
     }
 

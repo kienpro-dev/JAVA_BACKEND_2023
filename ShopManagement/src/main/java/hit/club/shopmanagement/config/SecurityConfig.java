@@ -39,12 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/users/edit/{id}").hasAuthority("ROLE_USER")
-                .antMatchers("/api/users/get-user/{id}").hasAuthority("ROLE_USER")
-                .antMatchers("/api/users/get-user-name/{id}").hasAuthority("ROLE_USER")
-                .antMatchers("/api/categories/get-category/**").hasAuthority("ROLE_USER")
-                .antMatchers("/api/categories/get-product/**").hasAuthority("ROLE_USER")
-                .antMatchers("/api/users/public/**").permitAll()
+                .antMatchers("/api/user/edit", "/api/user/get-user",
+                        "/api/user/get-user-name").hasAuthority("ROLE_USER")
+                .antMatchers("/api/category/get-category", "/api/category/get-category-name",
+                        "/api/product/get-product", "/api/product/get-product-name").hasAuthority("ROLE_USER")
+                .antMatchers("/api/user/public/**").permitAll()
+                .antMatchers("/api/user/**", "/api/product/**",
+                        "/api/category/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
@@ -18,26 +18,26 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.createNewCategory(categoryDTO));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> editCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable int id) {
+    @PutMapping("/edit")
+    public ResponseEntity<?> editCategory(@RequestBody CategoryDTO categoryDTO, @RequestParam int id) {
         Category category = categoryService.getCategoryById(id);
 
         return ResponseEntity.ok(categoryService.editCategoryById(id, categoryDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable int id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteCategory(@RequestParam int id) {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-category/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable int id) {
+    @GetMapping("/get-category")
+    public ResponseEntity<?> getCategoryById(@RequestParam int id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/get-category/{categoryName}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable String categoryName) {
+    @GetMapping("/get-category-name")
+    public ResponseEntity<?> getUserByUsername(@RequestParam String categoryName) {
         return ResponseEntity.ok(categoryService.searchCategoryByName(categoryName));
     }
 

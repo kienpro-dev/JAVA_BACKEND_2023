@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -49,26 +49,26 @@ public class UserController {
         return ResponseEntity.ok(userService.createNewUser(userDTO));
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO, @PathVariable int id) {
+    @PutMapping("/edit")
+    public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO, @RequestParam int id) {
         User user = userService.getUserById(id);
 
         return ResponseEntity.ok(userService.editUserById(id, userDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestParam int id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-user/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id) {
+    @GetMapping("/get-user")
+    public ResponseEntity<?> getUserById(@RequestParam int id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/get-user-name/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+    @GetMapping("/get-user-name")
+    public ResponseEntity<?> getUserByUsername(@RequestParam String username) {
         return ResponseEntity.ok(userService.searchUserByName(username));
     }
 
