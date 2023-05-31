@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/user/edit", "/api/user/get-user",
-                        "/api/user/get-user-name").hasAuthority("ROLE_USER")
-                .antMatchers("/api/category/get-category", "/api/category/get-category-name",
-                        "/api/product/get-product", "/api/product/get-product-name").hasAuthority("ROLE_USER")
+                .antMatchers("/api/user/edit/**", "/api/user/get-user/**",
+                        "/api/user/get-user-name/**").hasAuthority("ROLE_USER")
+                .antMatchers("/api/category/get-category/**", "/api/category/get-category-name/**",
+                        "/api/product/get-product/**", "/api/product/get-product-name/**").hasAuthority("ROLE_USER")
                 .antMatchers("/api/user/public/**").permitAll()
                 .antMatchers("/api/user/**", "/api/product/**",
                         "/api/category/**").hasAuthority("ROLE_ADMIN")
