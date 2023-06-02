@@ -13,9 +13,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -47,14 +50,19 @@ public class UserController {
     }
 
     @PostMapping("/public/create")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return resultValidation(bindingResult);
+        }
         return ResponseEntity.ok(userService.createNewUser(userDTO));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<?> editUser(@Valid @RequestBody UserDTO userDTO, @PathVariable int id) {
+    public ResponseEntity<?> editUser(@Valid @RequestBody UserDTO userDTO, @PathVariable int id, BindingResult bindingResult) {
         User user = userService.getUserById(id);
-
+        if(bindingResult.hasErrors()) {
+            return resultValidation(bindingResult);
+        }
         return ResponseEntity.ok(userService.editUserById(id, userDTO));
     }
 
@@ -77,5 +85,18 @@ public class UserController {
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(userService.getAllUser());
+    }
+
+    public ResponseEntity<?> resultValidation(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+
+        bindingResult.getFieldErrors().forEach(
+                error -> errors.put(error.getField(), error.getDefaultMessage())
+        );
+        StringBuilder errorMsg = new StringBuilder();
+        for (String key : errors.keySet()) {
+            errorMsg.append("Error in: ").append(key).append(", Reason: ").append(errors.get(key)).append("\n");
+        }
+        return ResponseEntity.ok(errorMsg.toString());
     }
 }

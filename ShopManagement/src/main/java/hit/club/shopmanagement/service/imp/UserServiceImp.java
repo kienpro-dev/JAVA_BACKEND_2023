@@ -41,12 +41,6 @@ public class UserServiceImp implements UserService {
     @Override
     public User createNewUser(UserDTO userDTO) {
         try {
-            modelMapper.typeMap(UserDTO.class, User.class).addMappings(new PropertyMap<UserDTO, User>() {
-                @Override
-                protected void configure() {
-                    skip(destination.getBirthday());
-                }
-            });
             User user = modelMapper.map(userDTO, User.class);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setRole(roleRepository.findRoleByRoleName(EnumRole.ROLE_USER));
