@@ -1,6 +1,7 @@
 package hit.club.shopmanagement.controller;
 
 import hit.club.shopmanagement.dto.UserDTO;
+import hit.club.shopmanagement.email.EmailService;
 import hit.club.shopmanagement.jwt.JwtUtils;
 import hit.club.shopmanagement.model.User;
 import hit.club.shopmanagement.request.LoginRequest;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/public/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -85,6 +90,11 @@ public class UserController {
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(userService.getAllUser());
+    }
+
+    @PostMapping("/public/forgot-password/{username}")
+    public ResponseEntity<?> forgotPassword(@PathVariable String username, @RequestParam String password, @RequestParam String password2, @RequestParam String to, @RequestParam String message) throws MessagingException {
+        return ResponseEntity.ok(emailService.sentEmail(to, message, password));
     }
 
     public ResponseEntity<?> resultValidation(BindingResult bindingResult) {
