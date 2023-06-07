@@ -100,8 +100,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping("/users/forgot-password/{username}")
-    public ResponseEntity<?> forgotPassword(@PathVariable String username, @RequestParam String password, @RequestParam String password2, @RequestParam String to, @RequestParam String message) throws MessagingException {
-        return ResponseEntity.ok(emailService.sentEmail(to, message, password));
+    public ResponseEntity<?> forgotPassword(@PathVariable String username, @RequestParam String password, @RequestParam String password2, @RequestParam String to) throws MessagingException {
+        return ResponseEntity.ok(emailService.sentPassword(to, password));
     }
 
     public ResponseEntity<?> resultValidation(BindingResult bindingResult) {

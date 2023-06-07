@@ -12,8 +12,8 @@ public class ScheduleMail {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(fixedRate = 1)
-    void setEmailSchedule(String to, String email, String message) throws MessagingException {
-        emailService.sentEmail(to, email, message);
+    @Scheduled(cron = "30 18 * * *")
+    void setEmailSchedule() throws MessagingException {
+        emailService.sentEmailBirthday("hoangphuong270703@gmail.com", "Bop co dan phong");
     }
 }

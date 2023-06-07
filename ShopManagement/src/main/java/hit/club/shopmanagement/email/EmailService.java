@@ -14,15 +14,30 @@ public class EmailService implements EmailSender {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
+
     @Override
-    public String sentEmail(String to, String email, String message) throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
+    public String sentPassword(String to, String message) throws MessagingException {
         messageHelper.setSubject(message);
-        messageHelper.setFrom(email);
-        messageHelper.setText(email, true);
+        messageHelper.setFrom("tienkiennropro@gmail.com");
+        messageHelper.setText(message, true);
         messageHelper.setTo(to);
         javaMailSender.send(mimeMessage);
         return "Sent password successfully!";
+    }
+
+    @Override
+    public void sentEmailBirthday(String to, String message) throws MessagingException {
+        messageHelper.setSubject(message);
+        messageHelper.setFrom("tienkiennropro@gmail.com");
+        messageHelper.setText(message, true);
+        messageHelper.setTo(to);
+        javaMailSender.send(mimeMessage);
+
+        /*
+        do something better
+        */
     }
 }
