@@ -68,9 +68,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User editUserById(int id, UserDTO userDTO) {
+    public void editUserById(int id, UserDTO userDTO) {
         try {
-            return userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), dateFormat.parse(userDTO.getBirthday()), userDTO.getUsername(), userDTO.getPassword());
+            userRepository.editUser(id, userDTO.getFullName(), userDTO.getAddress(), userDTO.getEmail(), dateFormat.parse(userDTO.getBirthday()), userDTO.getUsername(), userDTO.getPassword());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating user");
         }

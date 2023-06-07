@@ -36,8 +36,8 @@ public class CategoryController {
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
         }
-
-        return ResponseEntity.ok(categoryService.editCategoryById(id, categoryDTO));
+        categoryService.editCategoryById(id, categoryDTO);
+        return ResponseEntity.ok(categoryDTO);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

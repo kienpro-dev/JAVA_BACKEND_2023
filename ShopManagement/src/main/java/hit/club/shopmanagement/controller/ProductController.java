@@ -36,8 +36,8 @@ public class ProductController {
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
         }
-
-        return ResponseEntity.ok(productService.editProductById(id, productDTO));
+        productService.editProductById(id, productDTO);
+        return ResponseEntity.ok(productDTO);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

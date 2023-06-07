@@ -53,9 +53,9 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public Category editCategoryById(int id, CategoryDTO categoryDTO) {
+    public void editCategoryById(int id, CategoryDTO categoryDTO) {
         try {
-            return categoryRepository.editCategory(id, categoryDTO.getCategoryName(), categoryDTO.getDescription());
+            categoryRepository.editCategory(id, categoryDTO.getCategoryName(), categoryDTO.getDescription());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating category");
         }

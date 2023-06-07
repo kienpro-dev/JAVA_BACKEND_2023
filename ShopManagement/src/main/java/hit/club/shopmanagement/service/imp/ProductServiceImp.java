@@ -66,9 +66,9 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product editProductById(int id, ProductDTO productDTO) {
+    public void editProductById(int id, ProductDTO productDTO) {
         try {
-            return productRepository.editProduct(id, productDTO.getProductName(), productDTO.getCount(), productDTO.getPhoto().toString(), productDTO.getDescription());
+            productRepository.editProduct(id, productDTO.getProductName(), productDTO.getCount(), productDTO.getPhoto().toString(), productDTO.getDescription());
         } catch (Exception e) {
             throw new InternalServerException("Data error updating product");
         }

@@ -14,7 +14,7 @@ public interface UserService {
 
     List<User> getAllUser();
 
-    User editUserById(int id, UserDTO userDTO);
+    void editUserById(int id, UserDTO userDTO);
 
     void deleteUserById(int id);
 

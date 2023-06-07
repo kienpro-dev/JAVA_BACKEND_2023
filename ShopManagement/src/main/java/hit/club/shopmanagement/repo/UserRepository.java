@@ -14,12 +14,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findUserByUsername(String username);
 
     @Transactional
-    @Modifying
     @Query("select u from User u where u.username like '%?1%'")
     User searchByName(String username);
 
     @Transactional
     @Modifying
     @Query("update User u set u.fullName = ?2, u.address = ?3, u.email = ?4, u.birthday = ?5, u.username = ?6, u.password = ?7 where u.id = ?1")
-    User editUser(int id, String fullName, String address, String email, Date birthday, String username, String password);
+    void editUser(int id, String fullName, String address, String email, Date birthday, String username, String password);
 }

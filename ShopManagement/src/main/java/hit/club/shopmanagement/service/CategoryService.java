@@ -14,7 +14,7 @@ public interface CategoryService {
 
     List<Category> getAllCategory();
 
-    Category editCategoryById(int id, CategoryDTO categoryDTO);
+    void editCategoryById(int id, CategoryDTO categoryDTO);
 
     void deleteCategoryById(int id);
 
