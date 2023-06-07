@@ -1,8 +1,6 @@
 package hit.club.shopmanagement.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -17,7 +15,6 @@ import java.util.Map;
 
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
-    private final static Logger log = LoggerFactory.getLogger(JwtUtils.class);
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
