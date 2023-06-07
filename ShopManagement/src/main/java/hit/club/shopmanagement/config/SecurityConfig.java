@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,6 +29,10 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationEntryPoint authenticationEntryPoint;
@@ -39,14 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/api/user/edit/**", "/api/user/get-user/**",
-                        "/api/user/get-user-name/**").hasAuthority("ROLE_USER")
-                .antMatchers("/api/category/get-category/**", "/api/category/get-category-name/**",
-                        "/api/product/get-product/**", "/api/product/get-product-name/**").hasAuthority("ROLE_USER")
-                .antMatchers("/api/user/public/**").permitAll()
-                .antMatchers("/api/user/**", "/api/product/**",
-                        "/api/category/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
