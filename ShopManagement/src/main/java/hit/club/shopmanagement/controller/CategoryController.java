@@ -5,6 +5,7 @@ import hit.club.shopmanagement.model.Category;
 import hit.club.shopmanagement.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("/categories")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
@@ -26,7 +28,8 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.createNewCategory(categoryDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/categories/{id}")
     public ResponseEntity<?> editCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable int id, BindingResult bindingResult) {
         Category category = categoryService.getCategoryById(id);
 
@@ -37,23 +40,26 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.editCategoryById(id, categoryDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("/categories/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable int id) {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-category/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable int id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/get-category-name/{categoryName}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable String categoryName) {
-        return ResponseEntity.ok(categoryService.searchCategoryByName(categoryName));
-    }
+//    @GetMapping("/get-category-name/{categoryName}")
+//    public ResponseEntity<?> getUserByUsername(@PathVariable String categoryName) {
+//        return ResponseEntity.ok(categoryService.searchCategoryByName(categoryName));
+//    }
 
-    @GetMapping("/find-all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/categories")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }

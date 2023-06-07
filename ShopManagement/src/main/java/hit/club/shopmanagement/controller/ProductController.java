@@ -5,6 +5,7 @@ import hit.club.shopmanagement.model.Product;
 import hit.club.shopmanagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("/products")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
@@ -26,7 +28,8 @@ public class ProductController {
         return ResponseEntity.ok(productService.createNewProduct(productDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/products/{id}")
     public ResponseEntity<?> editProduct(@Valid @RequestBody ProductDTO productDTO, @PathVariable int id, BindingResult bindingResult) {
         Product product = productService.getProductById(id);
 
@@ -37,23 +40,26 @@ public class ProductController {
         return ResponseEntity.ok(productService.editProductById(id, productDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("/products/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable int id) {
         productService.deleteProductById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-product/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/products/{id}")
     public ResponseEntity<?> getProductById(@PathVariable int id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    @GetMapping("/get-product-name/{productName}")
-    public ResponseEntity<?> getProductByName(@PathVariable String productName) {
-        return ResponseEntity.ok(productService.searchProductByName(productName));
-    }
+//    @GetMapping("/get-product-name/{productName}")
+//    public ResponseEntity<?> getProductByName(@PathVariable String productName) {
+//        return ResponseEntity.ok(productService.searchProductByName(productName));
+//    }
 
-    @GetMapping("/find-all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/products")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(productService.getAllProduct());
     }

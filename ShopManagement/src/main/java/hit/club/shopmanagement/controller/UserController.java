@@ -10,6 +10,7 @@ import hit.club.shopmanagement.service.UserService;
 import hit.club.shopmanagement.service.imp.UserDetailImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,7 +38,7 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("/public/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new
                 UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -54,7 +55,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/public/create")
+    @PostMapping("/users")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
@@ -62,37 +63,43 @@ public class UserController {
         return ResponseEntity.ok(userService.createNewUser(userDTO));
     }
 
-    @PutMapping("/edit/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PutMapping("/users/{id}")
     public ResponseEntity<?> editUser(@Valid @RequestBody UserDTO userDTO, @PathVariable int id, BindingResult bindingResult) {
         User user = userService.getUserById(id);
         if(bindingResult.hasErrors()) {
             return resultValidation(bindingResult);
         }
-        return ResponseEntity.ok(userService.editUserById(id, userDTO));
+        userService.editUserById(id, userDTO);
+        return ResponseEntity.ok(userDTO);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-user/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id) {
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable(value = "id") int id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/get-user-name/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(userService.searchUserByName(username));
-    }
+//    @GetMapping("/users/{username}")
+//    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+//        return ResponseEntity.ok(userService.searchUserByName(username));
+//    }
 
-    @GetMapping("/find-all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/users")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(userService.getAllUser());
     }
 
-    @PostMapping("/public/forgot-password/{username}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostMapping("/users/forgot-password/{username}")
     public ResponseEntity<?> forgotPassword(@PathVariable String username, @RequestParam String password, @RequestParam String password2, @RequestParam String to, @RequestParam String message) throws MessagingException {
         return ResponseEntity.ok(emailService.sentEmail(to, message, password));
     }
